@@ -1,3 +1,8 @@
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
 import image01 from '../assets/image-01.png';
 import image02 from '../assets/image-02.png';
 import image03 from '../assets/image-03.png';
@@ -7,77 +12,106 @@ import image06 from '../assets/image-06.png';
 import image07 from '../assets/image-07.png';
 import image08 from '../assets/image-08.png';
 
-export default [
-    {
-        name: 'Kill Bill: Vol 1',
-        genre: [ 'Action & Adventure' ],
-        year: 2003,
-        duration: 111,
-        rating: 5.3,
-        image: image01,
-        description: ''
+export default new Vuex.Store({
+
+    state: {
+        searchType: 'name',
+        searchText: '',
+        sortType: 'year',
+        movies: [
+            {
+                id: 1,
+                name: 'Kill Bill: Vol 1',
+                genre: ['Action & Adventure'],
+                year: 2003,
+                duration: 111,
+                rating: 5.3,
+                image: image01,
+                description: ''
+            },
+            {
+                id: 2,
+                name: 'Kill Bill: Vol 2',
+                genre: ['Action & Adventure', 'Fiction'],
+                year: 2004,
+                duration: 136,
+                rating: 4.3,
+                image: image02,
+                description: ''
+            },
+            {
+                id: 3,
+                name: 'Reservoir Dogs',
+                genre: ['Action & Adventure'],
+                year: 1992,
+                duration: 99,
+                rating: 3.3,
+                image: image03,
+                description: ''
+            },
+            {
+                id: 4,
+                name: 'Pulp Fiction',
+                genre: ['Action & Adventure'],
+                year: 1994,
+                duration: 154,
+                rating: 5.3,
+                image: image04,
+                description: ''
+            },
+            {
+                id: 5,
+                name: 'Inseption',
+                genre: ['Action & Adventure'],
+                year: 2010,
+                duration: 154,
+                rating: 2.3,
+                image: image05,
+                description: ''
+            },
+            {
+                id: 6,
+                name: 'Avengers Infinity War',
+                genre: ['Action & Adventure'],
+                year: 2018,
+                duration: 129,
+                rating: 5.0,
+                image: image06,
+                description: ''
+            },
+            {
+                id: 7,
+                name: 'Four Rooms',
+                genre: ['Action & Adventure'],
+                year: 1995,
+                duration: 99,
+                rating: 4.3,
+                image: image07,
+                description: ''
+            },
+            {
+                id: 8,
+                name: 'Jackie Brown',
+                genre: ['Action & Adventure'],
+                year: 1997,
+                duration: 154,
+                rating: 2.3,
+                image: image08,
+                description: ''
+            }
+        ]
     },
-    {
-        name: 'Kill Bill: Vol 2',
-        genre: [ 'Action & Adventure', 'Fiction' ],
-        year: 2004,
-        duration: 136,
-        rating: 4.3,
-        image: image02,
-        description: ''
+
+    mutations: {
+        APPLY_SEARCH_TYPE(state, searchType) {
+            state.searchType = searchType;
+        },
+        APPLY_SEARCH_TEXT(state, searchText) {
+            state.searchText = searchText;
+        },
+        APPLY_SORT_TYPE(state, sortType) {
+            state.sortType = sortType;
+        },
     },
-    {
-        name: 'Reservoir Dogs',
-        genre: [ 'Action & Adventure' ],
-        year: 1992,
-        duration: 99,
-        rating: 3.3,
-        image: image03,
-        description: ''
-    },
-    {
-        name: 'Pulp Fiction',
-        genre: [ 'Action & Adventure' ],
-        year: 1994,
-        duration: 154,
-        rating: 5.3,
-        image: image04,
-        description: ''
-    },
-    {
-        name: 'Inseption',
-        genre: [ 'Action & Adventure' ],
-        year: 2010,
-        duration: 154,
-        rating: 2.3,
-        image: image05,
-        description: ''
-    },
-    {
-        name: 'Avengers Infinity War',
-        genre: [ 'Action & Adventure' ],
-        year: 2018,
-        duration: 129,
-        rating: 5.0,
-        image: image06,
-        description: ''
-    },
-    {
-        name: 'Four Rooms',
-        genre: [ 'Action & Adventure' ],
-        year: 1995,
-        duration: 99,
-        rating: 4.3,
-        image: image07,
-        description: ''
-    },
-    {
-        name: 'Jackie Brown',
-        genre: [ 'Action & Adventure' ],
-        year: 1997,
-        duration: 154,
-        rating: 2.3,
-        image: image08,
-        description: ''
-    }
-];
+
+});

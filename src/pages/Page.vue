@@ -22,9 +22,10 @@
 
 <script>
     import backgroundImage from '../assets/bg.png';
-    import SearchPanel from '../components/SearchPanel.vue'
-    import SortPanel from '../components/SortPanel.vue'
-    import Movies from '../components/Movies.vue'
+    import SearchPanel from '../components/SearchPanel.vue';
+    import SortPanel from '../components/SortPanel.vue';
+    import Movies from '../components/Movies.vue';
+    import { mapState } from 'vuex';
     export default {
         name: 'Page',
         components: {
@@ -32,30 +33,25 @@
             SortPanel,
             Movies
         },
-        props: {
-            movies: Array
-        },
         data: function () {
             return {
                 backgroundImage: backgroundImage,
-                searchType: 'name',
-                searchText: '',
-                sortType: 'year'
             }
         },
         methods: {
             onSearch: function (search) {
                 if (search.isType) {
-                    this.searchType = search.searchType;
+                    this.$store.commit('APPLY_SEARCH_TYPE', search.searchType);
                 } else if (search.isText) {
-                    this.searchText = search.searchText;
+                    this.$store.commit('APPLY_SEARCH_TEXT', search.searchText);
                 }
             },
             onSort: function (sortType) {
-                this.sortType = sortType;
+                this.$store.commit('APPLY_SORT_TYPE', sortType);
             }
         },
         computed: {
+            ...mapState(['searchType', 'searchText', 'sortType', 'movies']),
             selectedMovies: function () {
                 let movies = [...this.movies];
 

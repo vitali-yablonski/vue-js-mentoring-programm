@@ -1,21 +1,15 @@
 <template>
     <div id="app">
-        <Page :movies="movies"/>
+        <Page/>
     </div>
 </template>
 
 <script>
 import Page from './pages/Page.vue';
-import movies from './store/movies';
 export default {
     name: 'App',
     components: {
         Page
-    },
-    data: () => {
-        return {
-            movies: movies
-        }
     }
 }
 </script>
