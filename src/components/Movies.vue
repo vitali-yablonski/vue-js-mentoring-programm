@@ -2,7 +2,7 @@
     <div class="movies">
         <Movie
             v-for="movie in movies"
-            :key="movie.name"
+            :key="movie.id"
             :name="movie.name"
             :genre="movie.genre"
             :year="movie.year"
