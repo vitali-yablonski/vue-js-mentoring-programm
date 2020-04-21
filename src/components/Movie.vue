@@ -1,6 +1,10 @@
 <template>
     <div class="movie">
-        <img class="movie__image" :src="image" />
+        <img class="movie__image"
+             :src="lazyLoadImage"
+             v-hasIntersectionWithElement="'.page__body'"
+             @intersection="intersection($event)"
+        />
         <div class="movie__content">
             <div class="movie__name">
                 <p class="movie__text">{{ name }}</p>
@@ -17,6 +21,7 @@
 
 <script>
     import Pill from './Pill.vue'
+    import placeholder from '../assets/placeholder.png';
     export default {
         name: 'Movie',
         components: {
@@ -31,11 +36,19 @@
             image: String,
             description: String
         },
+        data: () => ({
+            lazyLoadImage: placeholder
+        }),
         computed: {
             genreText: function () {
                 return (this.genre || []).join(', ')
             }
-        }
+        },
+        methods: {
+            intersection() {
+                this.lazyLoadImage = this.image;
+            }
+        },
     }
 </script>
 

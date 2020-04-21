@@ -102,6 +102,33 @@ export default new Vuex.Store({
         ]
     },
 
+    getters: {
+        doneMovies: state => {
+            let movies = [...state.movies];
+
+            const searchKey = state.searchType;
+            const searchText = state.searchText;
+            if (searchKey && searchText) {
+                movies = movies.filter(function (movie) {
+                    let filter = false;
+                    if (Array.isArray(movie[searchKey])) {
+                        filter = movie[searchKey].filter(function (m) { return m.toLowerCase().indexOf(searchText.toLowerCase()) > -1; }).length > 0;
+                    } else {
+                        filter = movie[searchKey].toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+                    }
+                    return filter;
+                });
+            }
+
+            const sortKey = state.sortType;
+            return movies.sort(function(movie1, movie2) {
+                const x = movie1[sortKey];
+                const y = movie2[sortKey];
+                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+            });
+        }
+    },
+
     mutations: {
         APPLY_SEARCH_TYPE(state, searchType) {
             state.searchType = searchType;
@@ -113,5 +140,17 @@ export default new Vuex.Store({
             state.sortType = sortType;
         },
     },
+
+    actions: {
+        applySearchType(context, payload) {
+            context.commit('APPLY_SEARCH_TYPE', payload);
+        },
+        applySearchText(context, payload) {
+            context.commit('APPLY_SEARCH_TEXT', payload);
+        },
+        applySortType(context, payload) {
+            context.commit('APPLY_SORT_TYPE', payload);
+        }
+    }
 
 });

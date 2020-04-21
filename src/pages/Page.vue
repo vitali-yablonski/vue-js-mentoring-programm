@@ -6,13 +6,13 @@
                 v-on:search="onSearch"
             />
             <SortPanel
-                :count="selectedMovies.length"
+                :count="doneMovies.length"
                 :type="sortType"
                 v-on:sort="onSort"
             />
         </header>
         <main class="page__body">
-            <Movies :movies="selectedMovies" />
+            <Movies :movies="doneMovies" />
         </main>
         <footer class="page__footer">
             <span class="page__logo">netflix roulette</span>
@@ -25,7 +25,7 @@
     import SearchPanel from '../components/SearchPanel.vue';
     import SortPanel from '../components/SortPanel.vue';
     import Movies from '../components/Movies.vue';
-    import { mapState } from 'vuex';
+    import { mapState, mapGetters, mapActions } from 'vuex';
     export default {
         name: 'Page',
         components: {
@@ -39,43 +39,21 @@
             }
         },
         methods: {
+            ...mapActions(['applySearchType', 'applySearchText', 'applySortType']),
             onSearch: function (search) {
                 if (search.isType) {
-                    this.$store.commit('APPLY_SEARCH_TYPE', search.searchType);
+                    this.applySearchType(search.searchType);
                 } else if (search.isText) {
-                    this.$store.commit('APPLY_SEARCH_TEXT', search.searchText);
+                    this.applySearchText(search.searchText);
                 }
             },
             onSort: function (sortType) {
-                this.$store.commit('APPLY_SORT_TYPE', sortType);
+                this.applySortType(sortType);
             }
         },
         computed: {
             ...mapState(['searchType', 'searchText', 'sortType', 'movies']),
-            selectedMovies: function () {
-                let movies = [...this.movies];
-
-                const searchKey = this.searchType;
-                const searchText = this.searchText;
-                if (searchKey && searchText) {
-                    movies = movies.filter(function (movie) {
-                        let filter = false;
-                        if (Array.isArray(movie[searchKey])) {
-                            filter = movie[searchKey].filter(function (m) { return m.toLowerCase().indexOf(searchText.toLowerCase()) > -1; }).length > 0;
-                        } else {
-                            filter = movie[searchKey].toLowerCase().indexOf(searchText.toLowerCase()) > -1;
-                        }
-                        return filter;
-                    });
-                }
-
-                const sortKey = this.sortType;
-                return movies.sort(function(movie1, movie2) {
-                    const x = movie1[sortKey];
-                    const y = movie2[sortKey];
-                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-                });
-            }
+            ...mapGetters(['doneMovies'])
         }
     }
 </script>
@@ -98,6 +76,7 @@
         flex: 1;
         padding: 50px 50px;
         box-sizing: border-box;
+        overflow: auto;
     }
     .page__footer {
         display: flex;
