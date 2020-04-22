@@ -109,10 +109,10 @@ export default new Vuex.Store({
             const searchKey = state.searchType;
             const searchText = state.searchText;
             if (searchKey && searchText) {
-                movies = movies.filter(function (movie) {
+                movies = movies.filter((movie) => {
                     let filter = false;
                     if (Array.isArray(movie[searchKey])) {
-                        filter = movie[searchKey].filter(function (m) { return m.toLowerCase().indexOf(searchText.toLowerCase()) > -1; }).length > 0;
+                        filter = movie[searchKey].filter((m) => { return m.toLowerCase().indexOf(searchText.toLowerCase()) > -1; }).length > 0;
                     } else {
                         filter = movie[searchKey].toLowerCase().indexOf(searchText.toLowerCase()) > -1;
                     }
@@ -121,7 +121,7 @@ export default new Vuex.Store({
             }
 
             const sortKey = state.sortType;
-            return movies.sort(function(movie1, movie2) {
+            return movies.sort((movie1, movie2) => {
                 const x = movie1[sortKey];
                 const y = movie2[sortKey];
                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
