@@ -6,13 +6,13 @@
                 v-on:search="onSearch"
             />
             <SortPanel
-                :count="doneMovies.length"
+                :count="movies.length"
                 :type="sortType"
                 v-on:sort="onSort"
             />
         </header>
         <main class="page__body">
-            <Movies :movies="doneMovies" />
+            <Movies :movies="movies" />
         </main>
         <footer class="page__footer">
             <span class="page__logo">netflix roulette</span>
@@ -25,7 +25,7 @@
     import SearchPanel from '../components/SearchPanel.vue';
     import SortPanel from '../components/SortPanel.vue';
     import Movies from '../components/Movies.vue';
-    import { mapState, mapGetters, mapActions } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
     export default {
         name: 'Page',
         components: {
@@ -39,7 +39,7 @@
             }
         },
         methods: {
-            ...mapActions(['applySearchType', 'applySearchText', 'applySortType']),
+            ...mapActions(['fetchMovies', 'applySearchType', 'applySearchText', 'applySortType']),
             onSearch: function (search) {
                 if (search.isType) {
                     this.applySearchType(search.searchType);
@@ -53,7 +53,9 @@
         },
         computed: {
             ...mapState(['searchType', 'searchText', 'sortType', 'movies']),
-            ...mapGetters(['doneMovies'])
+        },
+        created() {
+            this.fetchMovies();
         }
     }
 </script>

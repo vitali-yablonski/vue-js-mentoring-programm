@@ -30,8 +30,7 @@
         props: {
             name: String,
             genre: Array,
-            year: Number,
-            duration: Number,
+            year: String,
             rating: Number,
             image: String,
             description: String

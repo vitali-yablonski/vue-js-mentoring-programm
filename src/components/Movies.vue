@@ -6,7 +6,6 @@
             :name="movie.name"
             :genre="movie.genre"
             :year="movie.year"
-            :duration="movie.duration"
             :rating="movie.rating"
             :image="movie.image"
             :description="movie.description"
