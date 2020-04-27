@@ -12,7 +12,19 @@
             />
         </header>
         <main class="page__body">
+            <Pagination
+                :total="totalMovies"
+                :offset="offsetMovies"
+                :limit="limitMovies"
+                v-on:pagination="onPagination"
+            />
             <Movies :movies="movies" />
+            <Pagination
+                :total="totalMovies"
+                :offset="offsetMovies"
+                :limit="limitMovies"
+                v-on:pagination="onPagination"
+            />
         </main>
         <footer class="page__footer">
             <span class="page__logo">netflix roulette</span>
@@ -25,13 +37,15 @@
     import SearchPanel from '../components/SearchPanel.vue';
     import SortPanel from '../components/SortPanel.vue';
     import Movies from '../components/Movies.vue';
+    import Pagination from '../components/Pagination.vue';
     import { mapState, mapActions } from 'vuex';
     export default {
         name: 'Page',
         components: {
             SearchPanel,
             SortPanel,
-            Movies
+            Movies,
+            Pagination
         },
         data: function () {
             return {
@@ -39,7 +53,7 @@
             }
         },
         methods: {
-            ...mapActions(['fetchMovies', 'applySearchType', 'applySearchText', 'applySortType']),
+            ...mapActions(['fetchMovies', 'applySearchType', 'applySearchText', 'applySortType', 'applyOffsetMovies']),
             onSearch: function (search) {
                 if (search.isType) {
                     this.applySearchType(search.searchType);
@@ -49,10 +63,13 @@
             },
             onSort: function (sortType) {
                 this.applySortType(sortType);
+            },
+            onPagination: function (offset) {
+                this.applyOffsetMovies(offset);
             }
         },
         computed: {
-            ...mapState(['searchType', 'searchText', 'sortType', 'movies']),
+            ...mapState(['searchType', 'searchText', 'sortType', 'movies', 'totalMovies', 'offsetMovies', 'limitMovies']),
         },
         created() {
             this.fetchMovies();

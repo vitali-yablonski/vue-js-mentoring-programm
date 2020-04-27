@@ -41,4 +41,13 @@ export default {
             });
         });
     },
+    fetchMovieById({ id, callback = () => {} }) {
+        Vue.http.get(`http://react-cdp-api.herokuapp.com/movies/${id}`).then(response => {
+            callback({ data: transform([response.data])[0] });
+        }, () => {
+            callback({
+                data: {}
+            });
+        });
+    },
 };

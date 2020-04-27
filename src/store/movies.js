@@ -13,7 +13,7 @@ export default new Vuex.Store({
         movies: [],
         totalMovies: 0,
         offsetMovies: 0,
-        limitMovies: 20
+        limitMovies: 80
     },
 
     mutations: {
@@ -31,6 +31,9 @@ export default new Vuex.Store({
         },
         APPLY_SORT_TYPE(state, sortType) {
             state.sortType = sortType;
+        },
+        APPLY_OFFSET_MOVIES(state, offsetMovies) {
+            state.offsetMovies = offsetMovies;
         },
     },
 
@@ -58,6 +61,10 @@ export default new Vuex.Store({
         },
         applySortType(context, sortType) {
             context.commit('APPLY_SORT_TYPE', sortType);
+            context.dispatch('fetchMovies');
+        },
+        applyOffsetMovies(context, offsetMovies) {
+            context.commit('APPLY_OFFSET_MOVIES', offsetMovies);
             context.dispatch('fetchMovies');
         }
     }
