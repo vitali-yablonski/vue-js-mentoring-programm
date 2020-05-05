@@ -1,16 +1,12 @@
 <template>
     <div id="app">
-        <Page/>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import Page from './pages/Page.vue';
 export default {
-    name: 'App',
-    components: {
-        Page
-    }
+    name: 'App'
 }
 </script>
 

@@ -18,7 +18,10 @@
                 :limit="limitMovies"
                 v-on:pagination="onPagination"
             />
-            <Movies :movies="movies" />
+            <Movies
+              :movies="movies"
+              v-on:select="onSelectMovie"
+            />
             <Pagination
                 :total="totalMovies"
                 :offset="offsetMovies"
@@ -66,7 +69,10 @@
             },
             onPagination: function (offset) {
                 this.applyOffsetMovies(offset);
-            }
+            },
+            onSelectMovie: function (id) {
+                this.$router.push({ name: 'details', params: { id } })
+            },
         },
         computed: {
             ...mapState(['searchType', 'searchText', 'sortType', 'movies', 'totalMovies', 'offsetMovies', 'limitMovies']),

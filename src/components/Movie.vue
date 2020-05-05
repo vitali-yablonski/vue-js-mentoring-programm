@@ -1,5 +1,5 @@
 <template>
-    <div class="movie">
+    <div class="movie" v-on:click="onClick">
         <img class="movie__image"
              :src="lazyLoadImage"
              v-hasIntersectionWithElement="'.page__body'"
@@ -28,6 +28,7 @@
             Pill
         },
         props: {
+            id: Number,
             name: String,
             genre: Array,
             year: String,
@@ -44,6 +45,9 @@
             }
         },
         methods: {
+            onClick() {
+                this.$emit('select', this.id);
+            },
             intersection() {
                 this.lazyLoadImage = this.image;
             }
