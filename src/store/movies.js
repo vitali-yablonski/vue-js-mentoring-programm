@@ -10,6 +10,7 @@ export default new Vuex.Store({
         searchText: '',
         searchType: 'name',
         sortType: 'year',
+        movie: {},
         movies: [],
         totalMovies: 0,
         offsetMovies: 0,
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        FETCH_MOVIE(state, payload) {
+            state.movie = payload.data;
+        },
         FETCH_MOVIES(state, payload) {
             state.movies = payload.data;
             state.totalMovies = payload.total;
@@ -38,6 +42,14 @@ export default new Vuex.Store({
     },
 
     actions: {
+        fetchMovie(context, id) {
+            MoviesAPI.fetchMovieById({
+                id,
+                callback: (payload) => {
+                    context.commit('FETCH_MOVIE', payload);
+                }
+            });
+        },
         fetchMovies(context) {
             MoviesAPI.fetchMovies({
                 search: context.state.searchText,

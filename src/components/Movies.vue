@@ -3,12 +3,14 @@
         <Movie
             v-for="movie in movies"
             :key="movie.id"
+            :id="movie.id"
             :name="movie.name"
             :genre="movie.genre"
             :year="movie.year"
             :rating="movie.rating"
             :image="movie.image"
             :description="movie.description"
+            v-on:select="onSelect"
         />
     </div>
 </template>
@@ -22,6 +24,11 @@
         },
         props: {
             movies: Array
+        },
+        methods: {
+            onSelect(id) {
+                this.$emit('select', id);
+            }
         }
     }
 </script>
